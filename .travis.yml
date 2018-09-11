@@ -1,61 +1,52 @@
 language: python
-python:
-  #  - "2.6"
-  - "2.7"
-  # - "3.2"
-  # - "3.3"
-  # - "3.4"
 
+env:
+    - CONDA_PYTHON_VERSION=2.7
+    - CONDA_PYTHON_VERSION=3.6
 
-os: linux
-# Ubuntu 14.04 Trusty support
-sudo: required
-dist: trusty
-# install new cmake
-#addons:
-#  apt:
-#    packages:
-#      - cmake
-#    sources:
-#      - kalakris-cmake
-virtualenv:
-  system_site_packages: true
+before_install:
+    # We do this conditionally because it saves us some downloading if the
+    # version is the same.
+    - if [[ "$CONDA_PYTHON_VERSION" == "2.7" ]]; then
+        wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh;
+      else
+        wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+      fi
+    - bash miniconda.sh -b -p $HOME/miniconda
+    - export PATH="$HOME/miniconda/bin:$PATH"
+    - hash -r
+    - conda config --set always_yes yes --set changeps1 no
+    - conda update -q conda
+    # Useful for debugging any issues with conda
+    - conda info -a
+
+install:
+    - conda config --add channels conda-forge
+    - sudo apt-get install -qq $(< apt_requirements.txt)
+    - mkdir -p ~/data/medical/orig
+#    - wget http://147.228.240.61/queetech/sample-extra-data/io3d_sample_data.zip
+#    - unzip -d ~/data/medical/orig/ io3d_sample_data.zip
+# command to install dependencies
+    - conda create --yes -n travis pip nose python=$CONDA_PYTHON_VERSION
+    - source activate travis
+#    - conda install --yes pip nose coverage
+    - pip install python-coveralls
+    - conda install --yes --file requirements_conda.txt python=$CONDA_PYTHON_VERSION
+#    - pip install checksumdir
+    - pip install .
+    - conda list
+
+#    - python -m io3d.datasets -l 3Dircadb1.1 jatra_5mm exp_small sliver_training_001 io3d_sample_data
+
+#    - pip install -r requirements.txt
+#    -
+# command to run tests
 before_script:
     # GUI
     - "export DISPLAY=:99.0"
     - "sh -e /etc/init.d/xvfb start"
     - sleep 3 # give xvfb sume time to start
 
-before_install:
-    - wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
-    - chmod +x miniconda.sh
-    - ./miniconda.sh -b
-    - export PATH=/home/travis/miniconda2/bin:$PATH
-    - sudo apt-get update
-
-#    - sudo apt-get install -qq cmake libinsighttoolkit3-dev libpng12-dev libgdcm2-dev
-    # - wget http://147.228.240.61/queetech/sample-extra-data/io3d_sample_data.zip && unzip io3d_sample_data.zip
-# command to install dependencies
-install:
-
-    - conda update --yes conda
-    - conda install --yes pip nose coverage
-#    - Install dependencies
-    - conda install --yes -c SimpleITK -c luispedro -c mjirik --file requirements_conda.txt
-#    - pip install -r requirements_pip.txt
-#    - "echo $LD_LIBRARY_PATH"
-#    - "pip install -r requirements.txt"
-#    - 'mkdir build'
-#    - "cd build"
-#    - "cmake .."
-#    - "cmake --build ."
-#    - "sudo make install"
-#    - pip install .
-#    - "cd .."
-#    - 'echo "include /usr/local/lib" | sudo tee -a /etc/ld.so.conf'
-#    - 'sudo ldconfig -v'
-#    - conda list -e
-# command to run tests
 script: nosetests --with-coverage --cover-package=data2tex
 after_success:
     - coveralls
