@@ -40,3 +40,5 @@ Table
 \input{dataframe}
 \end{document}
 ```
+
+[pdfoutpu]: https://raw.githubusercontent.com/mjirik/data2tex/master/graphics/pdfoutput.png "PDF output"
