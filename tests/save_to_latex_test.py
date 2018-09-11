@@ -63,6 +63,6 @@ class DataToTexTest(unittest.TestCase):
             os.remove(pdffile)
         import glob
         print(glob.glob(op.join(pth, "*")))
-        subprocess.check_call("pdflatex test_latex.tex -interaction nonstopmode", shell=True, cwd=pth)
+        subprocess.check_call("pdflatex test_latex.tex -interaction nonstopmode", shell=True, cwd=pth, timeout=None)
         # subprocess.run("dir", shell=True)
         self.assertTrue(op.exists(pdffile))
