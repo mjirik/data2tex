@@ -50,6 +50,7 @@ def _latex_float(f, precision=4):
     :param precision:
     :return:
     """
+    precision = precision + 1
     float_str = "{0:." + str(int(precision)) + "g}"
     float_str = float_str.format(f)
     if "e" in float_str:

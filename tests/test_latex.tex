@@ -4,16 +4,18 @@
 \usepackage{booktabs}
 \begin{document}
 
-Add  \verb+\usepackage{sinunitx}+  and \verb+\usepackage{booktabs}+  to you \LaTeX{}.
+In \texttt{python} script import \texttt{data2tex} package and
+use \verb+data2tex.save()+ function to export data from \texttt{python}.
 
-Use \verb+\input{name}+
+Add package \texttt{sinunitx}  and \texttt{booktabs} to your \LaTeX{} file
+and use \verb+\input{name}+ for importing the data.
 
-Ten \input{ten.tex},
-Pi \input{pi},
-Pi2 \input{pi2},
-Big $\input{big}$,
+Meausured radius $r = \input{radius}$
 
-Table
+\[
+S = \pi \cdot r^2 = \input{pi} \cdot \input{radius}^2 = \input{surface}
+\]
+
 
 \input{dataframe}
 \end{document}

@@ -47,10 +47,12 @@ class DataToTexTest(unittest.TestCase):
         pth = op.dirname(op.abspath(__file__))
 
         dtt.set_output(pth)
-        dtt.save(10, "ten")
-        dtt.save(np.pi, "pi")
-        dtt.save(np.pi, "pi2", precision=7)
-        dtt.save(3412516584, "big", scientific_notation=True)
+        r = 90
+        s = np.pi * r**2
+        dtt.save(r, "radius")
+        dtt.save(np.pi, "pi", precision=3)
+        # dtt.save(np.pi, "pi2", precision=7)
+        dtt.save(s, "surface", scientific_notation=True, precision=2)
         dates = pd.date_range('20130101', periods=6)
         df = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
         dtt.save(df, "dataframe")
