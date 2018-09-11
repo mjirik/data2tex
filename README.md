@@ -1,6 +1,5 @@
 # data2tex
-Latex support for trasport data from python script to LaTeX
-
+Latex support for pushing data from python script to LaTeX.
 
 In your python use `save` function.
 
@@ -41,4 +40,4 @@ Table
 \end{document}
 ```
 
-[pdfoutpu]: https://raw.githubusercontent.com/mjirik/data2tex/master/graphics/pdfoutput.png "PDF output"
+![pdfoutput](https://raw.githubusercontent.com/mjirik/data2tex/master/graphics/pdfoutput.png "PDF output")
