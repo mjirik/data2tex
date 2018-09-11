@@ -4,6 +4,7 @@ Latex support for trasport data from python script to LaTeX
 
 In your python
 
+```python
         import data2tex as dtt
 
         dtt.set_output(pth)
@@ -14,6 +15,7 @@ In your python
         dates = pd.date_range('20130101', periods=6)
         df = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
         dtt.save(df, "dataframe")
+```
 
 Add fallowing lines into your LaTeX
 
