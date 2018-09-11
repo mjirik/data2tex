@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 import os.path as op
 from numbers import Number
 
-output_dir_path = None
+output_dir_path = "."
 
 def set_output(dir_path):
     global output_dir_path
