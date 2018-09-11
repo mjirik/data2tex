@@ -61,7 +61,7 @@ test:
 about:
   home: https://github.com/mjirik/data2tex
   license: BSD License
-  summary: 'distribution to pypi and conda'
+  summary: 'Push data from python to LaTex file'
 
 # See
 # http://docs.continuum.io/conda/build.html for
