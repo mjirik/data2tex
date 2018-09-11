@@ -57,12 +57,15 @@ class DataToTexTest(unittest.TestCase):
         # dates = pd.date_range('20130101', periods=6)
         # df = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
         dtt.save(df[
-                     ["sex", 'fare', "embark town", "survived", "alone" "class", "age"]][:10], "dataframe")
+                     ["sex", 'fare', "embark_town", "survived", "alone", "class", "age"]][:10], "dataframe")
 
         print(pth)
         if op.exists(pdffile):
             os.remove(pdffile)
         import glob
+        print("first ", glob.glob(op.join(pth, "*")))
+        from time import sleep
+        sleep(10)
         print(glob.glob(op.join(pth, "*")))
         subprocess.check_call("pdflatex test_latex.tex -interaction nonstopmode", shell=True, cwd=pth, timeout=30)
         # subprocess.run("dir", shell=True)
