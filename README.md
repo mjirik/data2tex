@@ -2,7 +2,7 @@
 Latex support for trasport data from python script to LaTeX
 
 
-In your python
+In your python use `save` function.
 
 ```python
 import data2tex as dtt
