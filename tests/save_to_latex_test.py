@@ -56,13 +56,14 @@ class DataToTexTest(unittest.TestCase):
         df = pd.read_csv("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/titanic.csv")
         # dates = pd.date_range('20130101', periods=6)
         # df = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
-        dtt.save(df[:10], "dataframe")
+        dtt.save(df[
+                     ["sex", 'fare', "embark town", "survived", "alone" "class", "age"]][:10], "dataframe")
 
         print(pth)
         if op.exists(pdffile):
             os.remove(pdffile)
         import glob
         print(glob.glob(op.join(pth, "*")))
-        subprocess.check_call("pdflatex test_latex.tex -interaction nonstopmode", shell=True, cwd=pth, timeout=None)
+        subprocess.check_call("pdflatex test_latex.tex -interaction nonstopmode", shell=True, cwd=pth, timeout=30)
         # subprocess.run("dir", shell=True)
         self.assertTrue(op.exists(pdffile))
