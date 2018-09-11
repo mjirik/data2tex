@@ -19,6 +19,7 @@ before_install:
     - conda update -q conda
     # Useful for debugging any issues with conda
     - conda info -a
+    sudo apt-get install texlive-latex-base
 
 install:
     - conda config --add channels conda-forge
