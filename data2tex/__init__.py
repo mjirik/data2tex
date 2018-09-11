@@ -7,7 +7,6 @@ Module is used to export data from python script to LaTeX document.
 import logging
 logger = logging.getLogger(__name__)
 import os.path as op
-import numpy as np
 from numbers import Number
 
 output_dir_path = None
