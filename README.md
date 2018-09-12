@@ -36,7 +36,8 @@ In you LaTex then just call `input`
 \usepackage{booktabs}
 \begin{document}
 
-We have \input{nrecords} records in our titanic table. The total fare was $\input{fare}$  and mean survive chance is \input{psurvived}.
+We have \input{nrecords} records in our titanic table. 
+The total fare was $\input{fare}$  and mean survive chance is \input{psurvived}.
 
 \input{dataframe}
 \end{document}
