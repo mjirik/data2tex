@@ -74,7 +74,7 @@ def num2latex(num, filename=None, precision=4):
     :param precision:
     :return:
     """
-    precision = precision + 1
+    # precision = precision + 1
     if type(num) is str:
         float_str = num
     else:
