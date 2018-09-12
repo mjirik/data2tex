@@ -43,7 +43,8 @@ class DataToTexTest(unittest.TestCase):
 
     def test_compile_latex(self):
         texfile = "test_latex.tex"
-        pdffile = "test_latex.pdf"
+        fn, ext = op.splitext(texfile)
+        pdffile = fn + ".pdf"
         pth = op.dirname(op.abspath(__file__))
 
         dtt.set_output(pth)
@@ -57,23 +58,24 @@ class DataToTexTest(unittest.TestCase):
         # dates = pd.date_range('20130101', periods=6)
         # df = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
         dtt.save(df[
-                     ["sex", 'fare', "embark_town", "survived", "alone", "class", "age"]][:10], "dataframe")
+                     ["survived", "sex", "age", "class", 'fare', "embark_town", "alone"]][:10], "dataframe")
 
         print(pth)
         if op.exists(pdffile):
             os.remove(pdffile)
         import glob
-        p = subprocess.Popen(["pdflatex", "test_latex.tex", "-interaction", "nonstopmode"],
+        p = subprocess.Popen(["pdflatex", texfile, "-interaction", "nonstopmode"],
                              stdout=subprocess.PIPE, shell=False, cwd=pth)
         print("first ", glob.glob(op.join(pth, "*")))
         latex_output = p.communicate()
-        logger.debug(latex_output)
-        print(latex_output[0])
-        print(latex_output[1])
+        logger.debug(latex_output[0])
+        logger.debug(latex_output[1])
+        # print(latex_output[0])
+        # print(latex_output[1])
         # subprocess.Popen("pdflatex test_latex.tex -interaction nonstopmode", shell=True, cwd=pth)
         # subprocess.check_call("pdflatex test_latex.tex -interaction nonstopmode", shell=True, cwd=pth, timeout=30)
         # subprocess.run("dir", shell=True)
         from time import sleep
         sleep(10)
         print(glob.glob(op.join(pth, "*")))
-        self.assertTrue(op.exists(pdffile))
+        self.assertTrue(op.exists(op.join(pth, pdffile)))
