@@ -63,10 +63,16 @@ class DataToTexTest(unittest.TestCase):
         if op.exists(pdffile):
             os.remove(pdffile)
         import glob
-        subprocess.call("pdflatex test_latex.tex -interaction nonstopmode", shell=True, cwd=pth, timeout=90)
+        p = subprocess.Popen(["pdflatex", "test_latex.tex", "-interaction", "nonstopmode"],
+                             stdout=subprocess.PIPE, shell=False, cwd=pth)
+        print("first ", glob.glob(op.join(pth, "*")))
+        latex_output = p.communicate()
+        logger.debug(latex_output)
+        print(latex_output[0])
+        print(latex_output[1])
+        # subprocess.Popen("pdflatex test_latex.tex -interaction nonstopmode", shell=True, cwd=pth)
         # subprocess.check_call("pdflatex test_latex.tex -interaction nonstopmode", shell=True, cwd=pth, timeout=30)
         # subprocess.run("dir", shell=True)
-        print("first ", glob.glob(op.join(pth, "*")))
         from time import sleep
         sleep(10)
         print(glob.glob(op.join(pth, "*")))
