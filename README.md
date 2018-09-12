@@ -1,4 +1,7 @@
 # data2tex
+[![Build Status](https://travis-ci.org/mjirik/data2tex.svg?branch=master)](https://travis-ci.org/mjirik/data2tex)
+[![Coverage Status](https://coveralls.io/repos/github/mjirik/data2tex/badge.svg?branch=master)](https://coveralls.io/github/mjirik/data2tex?branch=master)
+
 Latex support for pushing data from python script to LaTeX.
 
 In your python use `save` function.

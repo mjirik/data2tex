@@ -60,22 +60,18 @@ class DataToTexTest(unittest.TestCase):
         dtt.save(df[
                      ["survived", "sex", "age", "class", 'fare', "embark_town", "alone"]][:10], "dataframe")
 
+        dtt.save(len(df), "nrecords")
+        dtt.save(np.mean(df["fare"]), "fare",  precision=3)
+        dtt.save(np.mean(df["survived"]), "psurvived", scientific_notation=True, precision=2)
+
         print(pth)
         if op.exists(pdffile):
             os.remove(pdffile)
         import glob
         p = subprocess.Popen(["pdflatex", texfile, "-interaction", "nonstopmode"],
                              stdout=subprocess.PIPE, shell=False, cwd=pth)
-        print("first ", glob.glob(op.join(pth, "*")))
         latex_output = p.communicate()
         logger.debug(latex_output[0])
         logger.debug(latex_output[1])
-        # print(latex_output[0])
-        # print(latex_output[1])
-        # subprocess.Popen("pdflatex test_latex.tex -interaction nonstopmode", shell=True, cwd=pth)
-        # subprocess.check_call("pdflatex test_latex.tex -interaction nonstopmode", shell=True, cwd=pth, timeout=30)
-        # subprocess.run("dir", shell=True)
-        from time import sleep
-        sleep(10)
-        print(glob.glob(op.join(pth, "*")))
+        # print(glob.glob(op.join(pth, "*")))
         self.assertTrue(op.exists(op.join(pth, pdffile)))
