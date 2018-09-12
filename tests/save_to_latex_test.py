@@ -48,17 +48,16 @@ class DataToTexTest(unittest.TestCase):
         pth = op.dirname(op.abspath(__file__))
 
         dtt.set_output(pth)
-        r = 90
-        s = np.pi * r**2
-        dtt.save(r, "radius")
-        dtt.save(np.pi, "pi", precision=3)
+        # r = 90
+        # s = np.pi * r**2
+        # dtt.save(r, "radius")
+        # dtt.save(np.pi, "pi", precision=3)
         # dtt.save(np.pi, "pi2", precision=7)
-        dtt.save(s, "surface", scientific_notation=True, precision=2)
-        df = pd.read_csv("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/titanic.csv")
+        # dtt.save(s, "surface", scientific_notation=True, precision=2)
         # dates = pd.date_range('20130101', periods=6)
         # df = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
-        dtt.save(df[
-                     ["survived", "sex", "age", "class", 'fare', "embark_town", "alone"]][:10], "dataframe")
+        df = pd.read_csv("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/titanic.csv")
+        dtt.save(df[["survived", "sex", "age", "class", 'fare', "embark_town", "alone"]][:10], "dataframe")
 
         dtt.save(len(df), "nrecords")
         dtt.save(np.sum(df["fare"]), "fare",  precision=2, scientific_notation=True)

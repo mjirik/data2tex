@@ -8,14 +8,18 @@ In your python use `save` function.
 
 ```python
 import data2tex as dtt
+import pandas as pd
+import numpy as np
 
-dtt.set_output(pth)
-dtt.save(10, "ten")
-dtt.save(np.pi, "pi")
-dtt.save(np.pi, "pi2", precision=7)
-dtt.save(3412516584, "big", scientific_notation=True)
-dates = pd.date_range('20130101', periods=6)
-df = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+dtt.set_output(".")
+
+df = pd.read_csv("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/titanic.csv")
+
+dtt.save(df[["survived", "sex", "age", "class", 'fare', "embark_town", "alone"]][:10], "dataframe")
+dtt.save(len(df), "nrecords")
+dtt.save(np.sum(df["fare"]), "fare",  precision=2, scientific_notation=True)
+dtt.save(np.mean(df["survived"]), "psurvived", precision=3)
+
 dtt.save(df, "dataframe")
 ```
 
@@ -32,12 +36,7 @@ In you LaTex then just call `input`
 \usepackage{booktabs}
 \begin{document}
 
-Ten \input{ten.tex},
-Pi \input{pi},
-Pi2 \input{pi2},
-Big $\input{big}$,
-
-Table
+We have \input{nrecords} records in our titanic table. The total fare was $\input{fare}$  and mean survive chance is \input{psurvived}.
 
 \input{dataframe}
 \end{document}
