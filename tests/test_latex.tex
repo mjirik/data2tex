@@ -4,21 +4,22 @@
 \usepackage{booktabs}
 \begin{document}
 
-In \texttt{python} script import \texttt{data2tex} package and
-use \verb+data2tex.save()+ function to export data from \texttt{python}.
+% In \texttt{python} script import \texttt{data2tex} package and
+% use \verb+data2tex.save()+ function to export data from \texttt{python}.
+%
+% Add package \texttt{sinunitx}  and \texttt{booktabs} to your \LaTeX{} file
+% and use \verb+\input{name}+ for importing the data.
 
-Add package \texttt{sinunitx}  and \texttt{booktabs} to your \LaTeX{} file
-and use \verb+\input{name}+ for importing the data.
+% Meausured radius $r = \input{radius}$
+%
+% \[
+% S = \pi \cdot r^2 = \input{pi} \cdot \input{radius}^2 = \input{surface}
+% \]
 
-Meausured radius $r = \input{radius}$
 
-\[
-S = \pi \cdot r^2 = \input{pi} \cdot \input{radius}^2 = \input{surface}
-\]
 
+
+We have \input{nrecords} records in our titanic table. The total fare was $\input{fare}$  and mean survive chance is \input{psurvived}.
 
 \input{dataframe}
-
-
-We have \input{nrecords} records in our table. The average fare was \input{fare} and mean survive chance is \input{psurvived}.
 \end{document}
