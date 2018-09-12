@@ -18,7 +18,7 @@ df = pd.read_csv("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/
 dtt.save(df[["survived", "sex", "age", "class", 'fare', "embark_town", "alone"]][:10], "dataframe")
 dtt.save(len(df), "nrecords")
 dtt.save(np.sum(df["fare"]), "fare",  precision=2, scientific_notation=True)
-dtt.save(np.mean(df["survived"]), "psurvived", precision=3)
+dtt.save(np.mean(df["survived"]), "psurvived", precision=4)
 
 dtt.save(df, "dataframe")
 ```
