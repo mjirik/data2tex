@@ -41,6 +41,10 @@ class DataToTexTest(unittest.TestCase):
 
         self.assertTrue(op.exists(op.join(pth, "fifteen.tex")))
 
+    # def test_throw_exception(self):
+    #     dtt.set_output(None)
+
+
     def test_compile_latex(self):
         texfile = "test_latex.tex"
         fn, ext = op.splitext(texfile)
@@ -62,6 +66,7 @@ class DataToTexTest(unittest.TestCase):
         dtt.save(len(df), "nrecords")
         dtt.save(np.sum(df["fare"]), "fare",  precision=2, scientific_notation=True)
         dtt.save(np.mean(df["survived"]), "psurvived", precision=3)
+        dtt.save(df["embark_town"].value_counts().idxmax(), "embark")
 
         print(pth)
         if op.exists(pdffile):
