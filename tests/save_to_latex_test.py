@@ -31,7 +31,6 @@ class DataToTexTest(unittest.TestCase):
     # @attr('interactive')
     def test_write_number(self):
         text = dtt.num2latex(15)
-
         self.assertEqual(text, r"\num[]{15}")
 
     def test_save_number(self):
@@ -40,6 +39,9 @@ class DataToTexTest(unittest.TestCase):
 
         self.assertTrue(op.exists(op.join(pth, "fifteen.tex")))
 
+    def test_num2latex_formated_str(self):
+        text = dtt.num2latex(r"\num[]{15}")
+        self.assertEqual(text, r"\num[]{15}")
 
     def test_num2latex_str(self):
         dtt.set_output(pth)
