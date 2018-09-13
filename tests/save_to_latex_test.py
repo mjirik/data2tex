@@ -51,7 +51,8 @@ class DataToTexTest(unittest.TestCase):
         text = dtt.save(3.1415, "one", scientific_notation=True, python_implementation=True)
 
         fn = self.run_latex("test_one.tex")
-        self.assertTrue(op.exists(op.join(pth, fn)))
+        print(fn)
+        self.assertTrue(op.exists(fn))
         os.remove(fn)
 
     def test_save_big_float_number_with_siunitx_implementation(self):
@@ -61,8 +62,8 @@ class DataToTexTest(unittest.TestCase):
         fn = self.run_latex("test_one.tex")
 
         # self.assertTrue(op.exists(fn))
-        self.assertTrue(op.exists(op.join(pth, fn)))
-        # os.remove(fn)
+        self.assertTrue(op.exists(fn))
+        os.remove(fn)
 
     def test_save_big_float_number_with_python_implementation(self):
         fn = op.join(pth, "one.tex")
@@ -136,4 +137,5 @@ class DataToTexTest(unittest.TestCase):
         latex_output = p.communicate()
         logger.debug(latex_output[0])
         logger.debug(latex_output[1])
-        return pdffile
+        full_pdffile = op.join(pth, pdffile)
+        return full_pdffile
