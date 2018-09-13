@@ -32,13 +32,19 @@ class DataToTexTest(unittest.TestCase):
     def test_write_number(self):
         text = dtt.num2latex(15)
 
-        self.assertEqual(text, r"\num{15}")
+        self.assertEqual(text, r"\num[]{15}")
 
     def test_save_number(self):
         dtt.set_output(pth)
         text = dtt.save(15, "fifteen")
 
         self.assertTrue(op.exists(op.join(pth, "fifteen.tex")))
+
+    def test_save_number_with_python_implementation(self):
+        dtt.set_output(pth)
+        text = dtt.save(16, "sixteen", scientific_notation=True, python_implementation=True)
+
+        self.assertTrue(op.exists(op.join(pth, "sixteen.tex")))
 
     def test_throw_exception_on_no_output_path(self):
         dtt.output_dir_path = None
@@ -66,6 +72,7 @@ class DataToTexTest(unittest.TestCase):
 
         dtt.save(len(df), "nrecords")
         dtt.save(np.sum(df["fare"]), "fare",  precision=2, scientific_notation=True)
+        # dtt.save(np.sum(df["fare"]), "fare",  precision=2, scientific_notation="engineering")
         dtt.save(np.mean(df["survived"]), "psurvived", precision=3)
         dtt.save(df["embark_town"].value_counts().idxmax(), "embark")
 

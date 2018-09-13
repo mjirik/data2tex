@@ -17,17 +17,32 @@ def set_output(dir_path):
     output_dir_path = odp
 
 
-def save(data, filename, precision=4, scientific_notation=False):
+def save(data, filename, precision=4, scientific_notation=None, python_implementation=False):
+    """
+
+    :param data:
+    :param filename:
+    :param precision: round precision
+    :param scientific_notation: None or False (13141), True (1.3141*10^4) or "engineering" (13.141 *10^3)
+    Format is done in LaTeX macro from siunitx package.
+    :param python_implementation:
+    The python implementation of scientific formating is used if this parameter is set True. Obsolete.
+    :return:
+    """
     tp = type(data)
 
     if type(data) is str:
         text = data
         pass
     elif isinstance(data, Number):
-        if scientific_notation:
+        if scientific_notation and python_implementation:
             text = _latex_float(data, precision=precision)
         else:
-            text = num2latex(data, precision=precision)
+            text = num2latex(
+                data,
+                precision=precision,
+                scientific_notation=scientific_notation
+            )
 
 
     else:
@@ -66,12 +81,13 @@ def _latex_float(f, precision=4):
 #         f.write(string)
 
 
-def num2latex(num, filename=None, precision=4):
+def num2latex(num, precision=4, scientific_notation=None):
     """
     Use package \\usepackage{siunitx}
     :param num:
     :param filename:
     :param precision:
+    :param scientific_notation: None or True, False or "engeneering"
     :return:
     """
     # precision = precision + 1
@@ -82,12 +98,19 @@ def num2latex(num, filename=None, precision=4):
         float_str = float_str.format(num)
 
     if float_str[:4] == r"\num":
+        formated_float_str = float_str
         pass
     else:
-        float_str = "\\num{" + float_str + "}"
-    if filename is not None:
-        _to_file(float_str, filename)
-    return float_str
+        formated_float_str = "\\num["
+        if scientific_notation is not None:
+            if scientific_notation is True:
+                scientific_notation = "true"
+            elif scientific_notation is False:
+                scientific_notation = "false"
+            formated_float_str += "scientific-notation=" + scientific_notation
+
+        formated_float_str += "]{" + float_str + "}"
+    return formated_float_str
 
 
 def _to_file(text, filename, check_extension=True):
