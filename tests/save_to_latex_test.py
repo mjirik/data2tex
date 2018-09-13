@@ -47,12 +47,30 @@ class DataToTexTest(unittest.TestCase):
         self.assertTrue(op.exists(op.join(pth, "sixteen.tex")))
 
     def test_save_pi_with_python_implementation(self):
-        fn = op.join(pth, "pi.tex")
         dtt.set_output(pth)
-        text = dtt.save(3.1415, "pi", scientific_notation=True, python_implementation=True)
+        text = dtt.save(3.1415, "one", scientific_notation=True, python_implementation=True)
 
+        fn = self.run_latex("test_one.tex")
         self.assertTrue(op.exists(fn))
         os.remove(fn)
+
+    def test_save_big_float_number_with_siunitx_implementation(self):
+        # fn = op.join(pth, "one.tex")
+        dtt.set_output(pth)
+        text = dtt.save(314155.436, "one", scientific_notation=True, python_implementation=False)
+        fn = self.run_latex("test_one.tex")
+
+        # self.assertTrue(op.exists(fn))
+        self.assertTrue(op.exists(op.join(pth, fn)))
+        # os.remove(fn)
+
+    def test_save_big_float_number_with_python_implementation(self):
+        fn = op.join(pth, "one.tex")
+        dtt.set_output(pth)
+        text = dtt.save(3141548765.43246, "one", scientific_notation=True, python_implementation=True)
+        # fn = self.run_latex("one.tex")
+
+        self.assertTrue(op.exists(fn))
 
     def test_save_pi_with_no_scientific_notation_and_siunitx_implementation(self):
         dtt.set_output(pth)
@@ -77,8 +95,6 @@ class DataToTexTest(unittest.TestCase):
 
     def test_compile_latex(self):
         texfile = "test_latex.tex"
-        fn, ext = op.splitext(texfile)
-        pdffile = fn + ".pdf"
         pth = op.dirname(op.abspath(__file__))
 
         dtt.set_output(pth)
@@ -99,7 +115,19 @@ class DataToTexTest(unittest.TestCase):
         dtt.save(np.mean(df["survived"]), "psurvived", precision=3)
         dtt.save(df["embark_town"].value_counts().idxmax(), "embark")
 
-        print(pth)
+        pdffile = self.run_latex(texfile, pth)
+        # print(glob.glob(op.join(pth, "*")))
+        self.assertTrue(op.exists(op.join(pth, pdffile)))
+
+
+    def run_latex(self, texfile, pth=None):
+        if pth is None:
+            pth = op.dirname(op.abspath(__file__))
+
+        fn, ext = op.splitext(texfile)
+        pdffile = fn + ".pdf"
+
+        # print(pth)
         if op.exists(pdffile):
             os.remove(pdffile)
         import glob
@@ -108,5 +136,4 @@ class DataToTexTest(unittest.TestCase):
         latex_output = p.communicate()
         logger.debug(latex_output[0])
         logger.debug(latex_output[1])
-        # print(glob.glob(op.join(pth, "*")))
-        self.assertTrue(op.exists(op.join(pth, pdffile)))
+        return pdffile
