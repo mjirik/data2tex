@@ -53,7 +53,6 @@ def save(data, filename, precision=4, scientific_notation=None, python_implement
                 pass
         except ImportError as e:
             logger.debug("pandas is not installed")
-            pass
 
     _to_file(text, filename)
 

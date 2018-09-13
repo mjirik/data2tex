@@ -40,6 +40,13 @@ class DataToTexTest(unittest.TestCase):
 
         self.assertTrue(op.exists(op.join(pth, "fifteen.tex")))
 
+
+    def test_num2latex_str(self):
+        dtt.set_output(pth)
+        text = dtt.num2latex("sedm")
+
+        self.assertEqual(text, "sedm")
+
     def test_save_number_with_python_implementation(self):
         dtt.set_output(pth)
         text = dtt.save(16, "sixteen", scientific_notation=True, python_implementation=True)
