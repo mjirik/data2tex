@@ -51,7 +51,7 @@ class DataToTexTest(unittest.TestCase):
         text = dtt.save(3.1415, "one", scientific_notation=True, python_implementation=True)
 
         fn = self.run_latex("test_one.tex")
-        self.assertTrue(op.exists(fn))
+        self.assertTrue(op.exists(op.join(pth, fn)))
         os.remove(fn)
 
     def test_save_big_float_number_with_siunitx_implementation(self):
