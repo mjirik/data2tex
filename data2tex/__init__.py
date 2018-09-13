@@ -90,17 +90,17 @@ def num2latex(num, precision=4, scientific_notation=None):
     :return:
     """
     # precision = precision + 1
+    formated_float_str = None
     if type(num) is str:
         float_str = num
+        if float_str[:4] == r"\num":
+            formated_float_str = float_str
     else:
         float_str = "{0:." + str(int(precision)) + "g}"
         float_str = float_str.format(num)
 
-    if float_str[:4] == r"\num":
-        formated_float_str = float_str
-        pass
-    else:
-        formated_float_str = "\\num["
+    if formated_float_str is None:
+        formated_float_str = r"\num["
         if scientific_notation is not None:
             if scientific_notation is True:
                 scientific_notation = "true"

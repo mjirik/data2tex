@@ -43,11 +43,11 @@ class DataToTexTest(unittest.TestCase):
         text = dtt.num2latex(r"\num[]{15}")
         self.assertEqual(text, r"\num[]{15}")
 
-    def test_num2latex_str(self):
-        dtt.set_output(pth)
-        text = dtt.num2latex("sedm")
-
-        self.assertEqual(text, "sedm")
+    # def test_num2latex_str(self):
+    #     dtt.set_output(pth)
+    #     text = dtt.num2latex("sedm")
+    #
+    #     self.assertEqual(text, "sedm")
 
     def test_save_number_with_python_implementation(self):
         dtt.set_output(pth)
