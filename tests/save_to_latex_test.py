@@ -46,6 +46,18 @@ class DataToTexTest(unittest.TestCase):
 
         self.assertTrue(op.exists(op.join(pth, "sixteen.tex")))
 
+    def test_save_pi_with_python_implementation(self):
+        dtt.set_output(pth)
+        text = dtt.save(3.1415, "pi", scientific_notation=True, python_implementation=True)
+
+        self.assertTrue(op.exists(op.join(pth, "pi.tex")))
+
+    def test_save_pi_with_no_scientific_notation_and_siunitx_implementation(self):
+        dtt.set_output(pth)
+        text = dtt.save(3.1415, "pi", scientific_notation=False, python_implementation=False)
+
+        self.assertTrue(op.exists(op.join(pth, "pi.tex")))
+
     def test_throw_exception_on_no_output_path(self):
         dtt.output_dir_path = None
         # dtt.set_output(None)
