@@ -21,7 +21,6 @@ import sys
 import numpy as np
 import data2tex as dtt
 
-
 from nose.plugins.attrib import attr
 
 pth = op.dirname(op.abspath(__file__))
@@ -41,8 +40,10 @@ class DataToTexTest(unittest.TestCase):
 
         self.assertTrue(op.exists(op.join(pth, "fifteen.tex")))
 
-    # def test_throw_exception(self):
-    #     dtt.set_output(None)
+    def test_throw_exception_on_no_output_path(self):
+        dtt.output_dir_path = None
+        # dtt.set_output(None)
+        self.assertRaises(ValueError, dtt._to_file, "asd", "file")
 
 
     def test_compile_latex(self):
