@@ -17,7 +17,7 @@ def set_output(dir_path):
     output_dir_path = odp
 
 
-def save(data, filename, precision=4, scientific_notation=None, python_implementation=False):
+def save(data, filename, precision=4, scientific_notation=None, python_implementation=False, index=False):
     """
 
     :param data:
@@ -49,7 +49,7 @@ def save(data, filename, precision=4, scientific_notation=None, python_implement
         try:
             import pandas as pd
             if type(data) == pd.DataFrame:
-                text = data.to_latex()
+                text = data.to_latex(index=index)
                 pass
         except ImportError as e:
             logger.debug("pandas is not installed")
