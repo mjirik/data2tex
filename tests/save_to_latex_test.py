@@ -30,7 +30,7 @@ class DataToTexTest(unittest.TestCase):
     # @attr('actual')
     # @attr('interactive')
     def test_write_number(self):
-        text = dtt.num2latex(15)
+        text = dtt.num2latex_with_siunintx(15)
         self.assertEqual(text, r"\num[]{15}")
 
     def test_save_number(self):
@@ -40,7 +40,7 @@ class DataToTexTest(unittest.TestCase):
         self.assertTrue(op.exists(op.join(pth, "fifteen.tex")))
 
     def test_num2latex_formated_str(self):
-        text = dtt.num2latex(r"\num[]{15}")
+        text = dtt.num2latex_with_siunintx(r"\num[]{15}")
         self.assertEqual(text, r"\num[]{15}")
 
     # def test_num2latex_str(self):
@@ -51,13 +51,13 @@ class DataToTexTest(unittest.TestCase):
 
     def test_save_number_with_python_implementation(self):
         dtt.set_output(pth)
-        text = dtt.save(16, "sixteen", scientific_notation=True, python_implementation=True)
+        text = dtt.save(16, "sixteen", scientific_notation=True, pure_latex=True)
 
         self.assertTrue(op.exists(op.join(pth, "sixteen.tex")))
 
     def test_save_pi_with_python_implementation(self):
         dtt.set_output(pth)
-        text = dtt.save(3.1415, "one", scientific_notation=True, python_implementation=True)
+        text = dtt.save(3.1415, "one", scientific_notation=True, pure_latex=True)
 
         fn = self.run_latex("test_one.tex")
         print(fn)
@@ -67,32 +67,43 @@ class DataToTexTest(unittest.TestCase):
     def test_save_big_float_number_with_siunitx_implementation(self):
         # fn = op.join(pth, "one.tex")
         dtt.set_output(pth)
-        text = dtt.save(314155.436, "one", scientific_notation=True, python_implementation=False)
+        text = dtt.save(314155.436, "one", scientific_notation=True, pure_latex=False)
         fn = self.run_latex("test_one.tex")
 
         # self.assertTrue(op.exists(fn))
         self.assertTrue(op.exists(fn))
         os.remove(fn)
 
-    def test_save_big_float_number_with_python_implementation(self):
+    def test_save_big_float_number_with_pure_latex(self):
         fn = op.join(pth, "one.tex")
         dtt.set_output(pth)
-        text = dtt.save(3141548765.43246, "one", scientific_notation=True, python_implementation=True)
+        text = dtt.save(3141548765.43246, "one", scientific_notation=True, pure_latex=True)
+        # fn = self.run_latex("one.tex")
+        self.assertTrue(op.exists(fn))
+
+    def test_seg_global_pure_latex(self):
+        fn = op.join(pth, "one.tex")
+        dtt.set_output(pth)
+        dtt.set_pure_latex(True)
+        text = dtt.save(3141548765.43246, "one")
+
+        self.assertFalse(r"\num" in text)
         # fn = self.run_latex("one.tex")
 
         self.assertTrue(op.exists(fn))
 
+
     def test_save_pi_with_no_scientific_notation_and_siunitx_implementation(self):
         dtt.set_output(pth)
         fn = op.join(pth, "pi.tex")
-        text = dtt.save(3.1415, "pi", scientific_notation=False, python_implementation=False)
+        text = dtt.save(3.1415, "pi", scientific_notation=False, pure_latex=False)
         self.assertTrue(op.exists(fn))
         os.remove(fn)
 
     def test_save_directly_num_with_siunitx_implementation(self):
         dtt.set_output(pth)
         fn = op.join(pth, "pi.tex")
-        text = dtt.save(r"\num{3.1415}", "pi", scientific_notation=False, python_implementation=False)
+        text = dtt.save(r"\num{3.1415}", "pi", scientific_notation=False, pure_latex=False)
         self.assertTrue(op.exists(fn))
         os.remove(fn)
 

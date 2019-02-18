@@ -10,6 +10,8 @@ import os.path as op
 from numbers import Number
 
 output_dir_path = "."
+use_pure_latex = False
+
 
 def set_output(dir_path):
     global output_dir_path
@@ -17,7 +19,12 @@ def set_output(dir_path):
     output_dir_path = odp
 
 
-def save(data, filename, precision=4, scientific_notation=None, python_implementation=False, index=False):
+def set_pure_latex(pure_tex):
+    global use_pure_latex
+    use_pure_latex = pure_tex
+
+
+def save(data, filename, precision=4, scientific_notation=None, pure_latex=None, index=False):
     """
 
     :param data:
@@ -25,20 +32,24 @@ def save(data, filename, precision=4, scientific_notation=None, python_implement
     :param precision: round precision
     :param scientific_notation: None or False (13141), True (1.3141*10^4) or "engineering" (13.141 *10^3)
     Format is done in LaTeX macro from siunitx package.
-    :param python_implementation:
+    :param pure_latex:
     The python implementation of scientific formating is used if this parameter is set True. Obsolete.
     :return:
     """
     tp = type(data)
 
+    if pure_latex is None:
+        pure_latex = use_pure_latex
+
     if type(data) is str:
         text = data
         pass
     elif isinstance(data, Number):
-        if scientific_notation and python_implementation:
-            text = _latex_float(data, precision=precision)
+        if pure_latex:
+            text = num2latex_pure_tex(data, precision=precision, scientific_notation=scientific_notation)
+            # text = _latex_float_pure(data, precision=precision)
         else:
-            text = num2latex(
+            text = num2latex_with_siunintx(
                 data,
                 precision=precision,
                 scientific_notation=scientific_notation
@@ -55,9 +66,10 @@ def save(data, filename, precision=4, scientific_notation=None, python_implement
             logger.debug("pandas is not installed")
 
     _to_file(text, filename)
+    return text
 
 
-def _latex_float(f, precision=4):
+def _latex_float_pure(f, precision=4):
     """
     Format implementation done in python.
     :param f:
@@ -74,13 +86,24 @@ def _latex_float(f, precision=4):
         return float_str
 
 
+def num2latex_pure_tex(num, precision=4, scientific_notation=None):
+    nstr = str(num)
+    if "e" in nstr:
+        scientific_notation = True
+
+    if scientific_notation:
+        nstr = _latex_float_pure(num, precision=precision)
+
+    return nstr
+
+
 # def float_to_latex_file(fl, fn, precision=4):
 #     string = latex_float(fl, precision=precision)
 #     with open(fn, "w") as f:
 #         f.write(string)
 
 
-def num2latex(num, precision=4, scientific_notation=None):
+def num2latex_with_siunintx(num, precision=4, scientific_notation=None):
     """
     Use package \\usepackage{siunitx}
     :param num:
