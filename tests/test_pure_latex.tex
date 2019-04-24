@@ -1,0 +1,33 @@
+% \documentclass[12pt]{article}
+\documentclass[preview]{standalone}
+% \usepackage{siunitx}
+% \usepackage{booktabs}
+
+\newcommand{\toprule}{}
+\newcommand{\midrule}{}
+\newcommand{\bottomrule}{}
+\newcommand{\specialrule}{}
+\begin{document}
+
+% In \texttt{python} script import \texttt{data2tex} package and
+% use \verb+data2tex.save()+ function to export data from \texttt{python}.
+%
+% Add package \texttt{sinunitx}  and \texttt{booktabs} to your \LaTeX{} file
+% and use \verb+\input{name}+ for importing the data.
+
+% Meausured radius $r = \input{radius}$
+%
+% \[
+% S = \pi \cdot r^2 = \input{pi} \cdot \input{radius}^2 = \input{surface}
+% \]
+
+
+
+
+We have \input{nrecords} records in our titanic table. The total fare was $\input{fare}$  and mean survive chance is \input{psurvived}.
+Most frequent embark town is \input{embark}.
+
+\input{dataframe}
+
+
+\end{document}

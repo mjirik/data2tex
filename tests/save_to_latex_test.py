@@ -140,6 +140,33 @@ class DataToTexTest(unittest.TestCase):
         # print(glob.glob(op.join(pth, "*")))
         self.assertTrue(op.exists(op.join(pth, pdffile)))
 
+    def test_compile_pure_latex(self):
+        texfile = "test_pure_latex.tex"
+        pth = op.dirname(op.abspath(__file__))
+
+        dtt.set_output(pth)
+        dtt.use_pure_latex = True
+        # r = 90
+        # s = np.pi * r**2
+        # dtt.save(r, "radius")
+        # dtt.save(np.pi, "pi", precision=3)
+        # dtt.save(np.pi, "pi2", precision=7)
+        # dtt.save(s, "surface", scientific_notation=True, precision=2)
+        # dates = pd.date_range('20130101', periods=6)
+        # df = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+        df = pd.read_csv("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/titanic.csv")
+        dtt.save(df[["survived", "sex", "age", "class", 'fare', "embark_town", "alone"]][:10], "dataframe")
+
+        dtt.save(len(df), "nrecords")
+        dtt.save(np.sum(df["fare"]), "fare",  precision=2, scientific_notation=True)
+        # dtt.save(np.sum(df["fare"]), "fare",  precision=2, scientific_notation="engineering")
+        dtt.save(np.mean(df["survived"]), "psurvived", precision=3)
+        dtt.save(df["embark_town"].value_counts().idxmax(), "embark")
+
+        pdffile = self.run_latex(texfile, pth)
+        # print(glob.glob(op.join(pth, "*")))
+        self.assertTrue(op.exists(op.join(pth, pdffile)))
+
 
     def run_latex(self, texfile, pth=None):
         if pth is None:

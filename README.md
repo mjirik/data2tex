@@ -44,3 +44,28 @@ The total fare was $\input{fare}$  and mean survive chance is \input{psurvived}.
 ```
 
 ![pdfoutput](https://raw.githubusercontent.com/mjirik/data2tex/master/graphics/pdfoutput.png "PDF output")
+
+
+# No dependency in LaTeX
+
+If you dont want be dependent on other LaTeX packages, fallowing setup can be used.
+
+
+1) The `pure_latex` parameter should be used in python.
+
+    ```python 
+    import data2tex as dtt
+    dtt.use_pure_latex = True
+    ```
+
+2) Define new commands in main `.tex`
+
+    ```latex
+    \newcommand{\toprule}{}
+    \newcommand{\midrule}{}
+    \newcommand{\bottomrule}{}
+    \newcommand{\specialrule}{}
+    ```
+
+
+
