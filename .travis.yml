@@ -1,5 +1,9 @@
 language: python
 
+os:
+    - linux
+    - osx
+    - windows
 env:
     - CONDA_PYTHON_VERSION=2.7
     - CONDA_PYTHON_VERSION=3.6
@@ -7,6 +11,17 @@ env:
 before_install:
     # We do this conditionally because it saves us some downloading if the
     # version is the same.
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+        if [[ "$CONDA_PYTHON_VERSION" == "2.7" ]]; then
+            wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh;
+        else
+            wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+        fi
+      elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+            wget https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh;
+        elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
+            wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.sh -O miniconda.sh;
+      fi
     - if [[ "$CONDA_PYTHON_VERSION" == "2.7" ]]; then
         wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh;
       else
