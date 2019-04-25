@@ -35,12 +35,16 @@ before_install:
     # Useful for debugging any issues with conda
     - conda info -a
     # extra is because of package standalone
-    - sudo apt-get install texlive-latex-base texlive-latex-extra texlive-science
 
 install:
     - conda config --add channels conda-forge
-    - sudo apt-get install -qq $(< apt_requirements.txt)
-    - mkdir -p ~/data/medical/orig
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+        sudo apt-get install texlive-latex-base texlive-latex-extra texlive-science
+        elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
+        conda install -c miktex
+        fi
+#    - sudo apt-get install -qq $(< apt_requirements.txt)
+#    - mkdir -p ~/data/medical/orig
 #    - wget http://147.228.240.61/queetech/sample-extra-data/io3d_sample_data.zip
 #    - unzip -d ~/data/medical/orig/ io3d_sample_data.zip
 # command to install dependencies
