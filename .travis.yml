@@ -40,9 +40,12 @@ install:
     - conda config --add channels conda-forge
     - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
         sudo apt-get install texlive-latex-base texlive-latex-extra texlive-science;
-        elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
+      elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
         conda install -c miktex;
-        fi
+      elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+        brew tap caskroom/cask ;
+        brew cask install mactex-no-gui ;
+      fi
 #    - sudo apt-get install -qq $(< apt_requirements.txt)
 #    - mkdir -p ~/data/medical/orig
 #    - wget http://147.228.240.61/queetech/sample-extra-data/io3d_sample_data.zip
