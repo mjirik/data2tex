@@ -54,6 +54,7 @@ install:
         brew tap caskroom/cask ;
         brew cask install mactex-no-gui ;
       fi
+    - pdflatex --help
 #    - sudo apt-get install -qq $(< apt_requirements.txt)
 #    - mkdir -p ~/data/medical/orig
 #    - wget http://147.228.240.61/queetech/sample-extra-data/io3d_sample_data.zip
