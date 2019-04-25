@@ -61,9 +61,9 @@ If you dont want be dependent on other LaTeX packages, fallowing setup can be us
 2) Define new commands in main `.tex`
 
     ```latex
-    \newcommand{\toprule}{}
-    \newcommand{\midrule}{}
-    \newcommand{\bottomrule}{}
+    \newcommand{\toprule}{\hline}
+    \newcommand{\midrule}{\hline}
+    \newcommand{\bottomrule}{\hline}
     \newcommand{\specialrule}{}
     ```
 
