@@ -4,7 +4,7 @@ language: bash # xserver does not work on linux with bash setup
 os:
     - linux
     - osx
-    - windows
+#    - windows
 env:
     - CONDA_PYTHON_VERSION=2.7
     - CONDA_PYTHON_VERSION=3.6
@@ -31,7 +31,7 @@ before_install:
 #    - bash miniconda.sh -b -p $HOME/miniconda
 
     - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-        miniconda.exe ;
+        ./miniconda.exe ;
       else
         bash miniconda.sh -b -p $HOME/miniconda ;
         export PATH="$HOME/miniconda/bin:$PATH" ;
