@@ -54,6 +54,7 @@ install:
         brew tap caskroom/cask ;
         brew cask install mactex-no-gui ;
       fi
+    - latex --help
     - pdflatex --help
 #    - sudo apt-get install -qq $(< apt_requirements.txt)
 #    - mkdir -p ~/data/medical/orig
