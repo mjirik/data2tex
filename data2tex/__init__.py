@@ -24,7 +24,7 @@ def set_pure_latex(pure_tex):
     use_pure_latex = pure_tex
 
 
-def save(data, filename, precision=4, scientific_notation=None, pure_latex=None, index=False):
+def save(data, filename, precision=4, scientific_notation=None, pure_latex=None, index=False, format_str=None):
     """
 
     :param data:
@@ -35,6 +35,7 @@ def save(data, filename, precision=4, scientific_notation=None, pure_latex=None,
     :param pure_latex:
     The python implementation of scientific formating is used if this parameter is set True. Obsolete.
     :param index: used for pandas DataFrame
+    :param format_str:  override precision and try '{:.2e}'. Works only with pure latex
     :return:
     """
     tp = type(data)
@@ -47,7 +48,7 @@ def save(data, filename, precision=4, scientific_notation=None, pure_latex=None,
         pass
     elif isinstance(data, Number):
         if pure_latex:
-            text = num2latex_pure_tex(data, precision=precision, scientific_notation=scientific_notation)
+            text = num2latex_pure_tex(data, precision=precision, scientific_notation=scientific_notation, format_str=format_str)
             # text = _latex_float_pure(data, precision=precision)
         else:
             text = num2latex_with_siunintx(
@@ -70,7 +71,7 @@ def save(data, filename, precision=4, scientific_notation=None, pure_latex=None,
     return text
 
 
-def _latex_float_pure(f, precision=4):
+def _latex_float_pure(f, precision=4, format_str=None):
     """
     Format implementation done in python.
     :param f:
@@ -78,22 +79,23 @@ def _latex_float_pure(f, precision=4):
     :return:
     """
     precision = precision + 1
-    float_str = "{0:." + str(int(precision)) + "g}"
-    float_str = float_str.format(f)
-    if "e" in float_str:
-        base, exponent = float_str.split("e")
+    if format_str is None:
+        fromat_str = "{0:." + str(int(precision)) + "g}"
+        fromat_str = fromat_str.format(f)
+    if "e" in fromat_str:
+        base, exponent = fromat_str.split("e")
         return r"{0} \times 10^{{{1}}}".format(base, int(exponent))
     else:
-        return float_str
+        return fromat_str
 
 
-def num2latex_pure_tex(num, precision=4, scientific_notation=None):
+def num2latex_pure_tex(num, precision=4, scientific_notation=None, format_str=None):
     nstr = str(num)
     if "e" in nstr:
         scientific_notation = True
 
     if scientific_notation:
-        nstr = _latex_float_pure(num, precision=precision)
+        nstr = _latex_float_pure(num, precision=precision, format_str=format_str)
 
     return nstr
 
