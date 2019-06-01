@@ -68,4 +68,14 @@ If you dont want be dependent on other LaTeX packages, fallowing setup can be us
     ```
 
 
+Example
+
+```python
+import data2tex as dtt
+dtt.use_pure_latex = True
+dtt.save(268435456, "n_t", precision=2, scientific_notation=True)
+'2.68 \\times 10^{8}'
+
+```
+
 
