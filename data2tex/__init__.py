@@ -34,6 +34,7 @@ def save(data, filename, precision=4, scientific_notation=None, pure_latex=None,
     Format is done in LaTeX macro from siunitx package.
     :param pure_latex:
     The python implementation of scientific formating is used if this parameter is set True. Obsolete.
+    :param index: used for pandas DataFrame
     :return:
     """
     tp = type(data)
