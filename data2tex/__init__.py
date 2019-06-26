@@ -167,7 +167,7 @@ def _to_file(text, filename, check_extension=True):
             import pathlib
             output_dir_path.mkdir(parents=True, exist_ok=True)
             filename = output_dir_path / filename
-            filename.mkdir(parents=True, exist_ok=True)
+            filename.parents[0].mkdir(parents=True, exist_ok=True)
 
         except ImportError:
             logger.warning("Pathlib not installed.")
