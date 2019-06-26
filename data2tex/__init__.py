@@ -8,15 +8,17 @@ import logging
 logger = logging.getLogger(__name__)
 import os.path as op
 from numbers import Number
+from pathlib import Path
 
 output_dir_path = "."
 use_pure_latex = False
 
 
 def set_output(dir_path):
+
     global output_dir_path
     odp = op.expanduser(dir_path)
-    output_dir_path = odp
+    output_dir_path = Path(odp)
 
 
 def set_pure_latex(pure_tex):
