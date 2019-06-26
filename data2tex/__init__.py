@@ -163,6 +163,12 @@ def _to_file(text, filename, check_extension=True):
         if output_dir_path is None:
             logger.error("Set output dir with set_output() function")
             raise ValueError("The output path is not set.")
+        try:
+            import pathlib
+            output_dir_path.mkdir(parents=True, exist_ok=True)
+        except ImportError:
+            logger.warning("Pathlib not installed.")
+
         filename = op.join(output_dir_path, filename)
 
     with open(filename, "w") as f:
