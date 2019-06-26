@@ -166,10 +166,13 @@ def _to_file(text, filename, check_extension=True):
         try:
             import pathlib
             output_dir_path.mkdir(parents=True, exist_ok=True)
+            filename = output_dir_path / filename
+            filename.mkdir(parents=True, exist_ok=True)
+
         except ImportError:
             logger.warning("Pathlib not installed.")
+            filename = op.join(output_dir_path, filename)
 
-        filename = op.join(output_dir_path, filename)
 
     with open(filename, "w") as f:
         f.write(text)
